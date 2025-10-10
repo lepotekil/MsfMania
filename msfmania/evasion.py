@@ -1,6 +1,6 @@
 import random
 
-from lib import core
+from msfmania import core
 from OpenSSL import crypto
 from pathlib import Path
 from ssl import get_server_certificate

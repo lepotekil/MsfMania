@@ -1,4 +1,4 @@
-from lib import core, evasion
+from msfmania import core, evasion
 
 
 def exercise_room(arch, inject_type, procname, filename, junkcode, sleep, vshellcode, decoder_stub):

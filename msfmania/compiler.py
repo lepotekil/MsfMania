@@ -1,4 +1,4 @@
-from lib import core
+from msfmania import core
 from os import system, chdir
 from subprocess import check_call, PIPE
 from random import randint

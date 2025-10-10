@@ -1,4 +1,4 @@
-from lib import core
+from msfmania import core
 from subprocess import PIPE, run
 from os import urandom
 from random import randint

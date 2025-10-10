@@ -1,4 +1,4 @@
-from lib import builder, compiler, core, encryption, evasion
+from msfmania import builder, compiler, core, encryption, evasion
 import argparse
 from os import makedirs, path
 from shutil import which
