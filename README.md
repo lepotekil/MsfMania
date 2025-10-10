@@ -12,19 +12,10 @@ MsfMania is a Python-based command-line tool specifically designed to bypass ant
 * [Usage](#Usage)
 
 ## Features
-- Polymorphic C/C++ source code.
-- x86/x64 staged/stageless Windows payload meterpreter/shell.
-- Local & remote memory injection
-- XOR encryption.
-- Sandbox and Antivirus Evasion.
-- Junk code injection.
-- Run as Administrator.
-- Executable customizable with an icon.
-- Cross-compiler with MinGW.
-- RAR algorithm compression.
-- Automatic Metasploit configuration.
-- Sign executable with a spoofed certificate.
-- UPX Packer
+- Polymorphic C stub.
+- Local memory injection
+- Custom RC4 algorithm payload encryption
+- Cross-compilation with MinGW.
 
 ## Requirements
 - Latest version of Kali distribution
@@ -37,7 +28,7 @@ MsfMania is a Python-based command-line tool specifically designed to bypass ant
 
 ## Usage
 ```
-python3 MsfMania.py -h
+python3 main.py -h
 ```
 
 ## Disclaimer

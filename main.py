@@ -1,4 +1,4 @@
-from msfmania import builder, compiler, core, encryption, evasion
+from msfmania import compiler, core, encryption, evasion
 import argparse
 from os import makedirs, path
 from shutil import which
@@ -23,4 +23,16 @@ if __name__ == '__main__':
     filename += str(args.filename)
 
     payload = open(payload, "rb").read()
-    encrypted_shellcode, key, nonce = encryption.shellcode_encryption(payload)
+    encrypted_shellcode, payload_hash, salt = encryption.shellcode_encryption(payload)
+    
+    print("Encrypted Shellcode:")
+    print(encrypted_shellcode)
+    print()
+    
+    print("djb2 Hash:")
+    print(payload_hash)
+    print()
+    
+    print("Salt:")
+    print(salt)
+    print()
