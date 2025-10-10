@@ -6,6 +6,7 @@ def compile(filename):
     output_dir = "/app/output" if os.path.exists("/app/output") else "."
     output_path = f"{output_dir}/{filename}.exe"
     
+    # Compile the C stub file
     system(
         f"x86_64-w64-mingw32-gcc "
         f"-Wall -Wextra "                
@@ -16,3 +17,6 @@ def compile(filename):
         f"-Wl,--nxcompat -Wl,--dynamicbase "
         f"/tmp/main.c -o {output_path} -lz"
     )
+
+    # Copy the C stub file to the output directory
+    system(f"cat /tmp/main.c > {output_dir}/examples/main.c")
