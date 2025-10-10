@@ -1,5 +1,5 @@
 # MsfMania
-MsfMania is a Python-based command-line tool specifically designed to bypass antivirus detection on Windows systems.
+MsfMania is a Python-based command-line tool specifically designed to bypass EDR detection on Windows systems.
 
 ![alt text](https://github.com/lepotekil/MsfMania/blob/master/VirusTotal.png)
 
@@ -18,8 +18,11 @@ MsfMania is a Python-based command-line tool specifically designed to bypass ant
 - Cross-compilation with MinGW.
 
 ## Requirements
-- Latest version of Kali distribution
-- Python3
+- Electricity
+- Internet
+- Personal Computer or Server
+- Operating System (any)
+- Docker
 
 ## Installation
 - Git clone this repository: ```git clone https://github.com/lepotekil/MsfMania.git```
