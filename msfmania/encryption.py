@@ -36,8 +36,8 @@ class RC4:
         return bytes(result)
 
 
-def shellcode_encryption(shellcode):
-    key = keygen_rc4()
+def shellcode_encryption(shellcode, key_size=3):
+    key = keygen_rc4(key_size)
     
     shellcode_bytes = shellcode
     
@@ -66,10 +66,9 @@ def shellcode_encryption(shellcode):
     return encrypted_shellcode_readable, hash_readable, salt_readable
 
 
-def keygen_rc4():
-    """Generate RC4 key with 3 characters"""
-    key_length = 3
-    key = bytes([randint(1, 255) for _ in range(key_length)])
+def keygen_rc4(key_size=3):
+    """Generate RC4 key with specified size (1-3 characters)"""
+    key = bytes([randint(1, 255) for _ in range(key_size)])
     return key
 
 

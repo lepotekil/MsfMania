@@ -13,7 +13,7 @@ def compile(filename):
         f"-O2 -g "                       
         f"-fno-exceptions -fno-asynchronous-unwind-tables "  
         f"-static -static-libgcc -static-libstdc++ "
-        f"-mwindows "
+        # f"-mwindows "
         f"-Wl,--nxcompat -Wl,--dynamicbase "
         f"/tmp/main.c -o {output_path} -lz"
     )
