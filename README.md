@@ -24,11 +24,11 @@ MsfMania is a Python-based command-line tool specifically designed to bypass ant
 ## Installation
 - Git clone this repository: ```git clone https://github.com/lepotekil/MsfMania.git```
 - cd into the MsfMania folder: ```cd MsfMania```
-- Good penetration testing
+- Build the MsfMania docker image: ```docker build -t msfmania:latest .```
 
 ## Usage
 ```
-python3 main.py -h
+docker run --rm -v "$(pwd):/app/output" msfmania:latest python3 main.py -p msfmania/assets/bins/win_x64_msgbox_msfvenom_20251010.bin -o payload 
 ```
 
 ## Disclaimer

