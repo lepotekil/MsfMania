@@ -26,7 +26,8 @@ def obfuscate_c_file(file_path):
         'inline', 'int', 'long', 'register', 'restrict', 'return', 'short',
         'signed', 'sizeof', 'static', 'struct', 'switch', 'typedef', 'union',
         'unsigned', 'void', 'volatile', 'while', 'NULL', 'true', 'false',
-        '_Bool', '_Complex', '_Imaginary', 'main'
+        '_Bool', '_Complex', '_Imaginary', 'main', 'key', 'printf', 'memcpy',
+        'memset', 'VirtualAlloc', 'uncompress', 'MEM_COMMIT', 'PAGE_EXECUTE_READWRITE'
     }
     
     # Remove comments and prepare content for analysis
@@ -86,11 +87,59 @@ def obfuscate_c_file(file_path):
     # Sort by length (longest first) to avoid partial replacements
     sorted_mappings = sorted(name_mappings.items(), key=lambda x: len(x[0]), reverse=True)
     
-    # Replace identifiers using word boundaries
+    # Replace identifiers using word boundaries, but preserve strings
     modified_content = content_no_comments
     for original, obfuscated in sorted_mappings:
-        pattern = r'\b' + re.escape(original) + r'\b'
-        modified_content = re.sub(pattern, obfuscated, modified_content)
+        # Split content into lines and process each line
+        lines = modified_content.split('\n')
+        new_lines = []
+        
+        for line in lines:
+            # Check if line contains strings
+            if '"' in line:
+                # Split line into parts: code and strings
+                parts = []
+                current_part = ""
+                in_string = False
+                i = 0
+                
+                while i < len(line):
+                    char = line[i]
+                    if char == '"' and (i == 0 or line[i-1] != '\\'):
+                        if in_string:
+                            # End of string
+                            parts.append((current_part + char, True))
+                            current_part = ""
+                            in_string = False
+                        else:
+                            # Start of string
+                            if current_part:
+                                parts.append((current_part, False))
+                            current_part = char
+                            in_string = True
+                    else:
+                        current_part += char
+                    i += 1
+                
+                if current_part:
+                    parts.append((current_part, in_string))
+                
+                # Replace only in non-string parts
+                new_line = ""
+                for part, is_string in parts:
+                    if is_string:
+                        new_line += part
+                    else:
+                        pattern = r'\b' + re.escape(original) + r'\b'
+                        new_line += re.sub(pattern, obfuscated, part)
+                
+                new_lines.append(new_line)
+            else:
+                # No strings in line, safe to replace
+                pattern = r'\b' + re.escape(original) + r'\b'
+                new_lines.append(re.sub(pattern, obfuscated, line))
+        
+        modified_content = '\n'.join(new_lines)
     
     # Write to temporary file
     temp_path = file_path + '.tmp'
