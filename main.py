@@ -1,4 +1,4 @@
-from msfmania import compiler, core, encryption
+from msfmania import compiler, core, encryption, evasion, builder
 import argparse
 
 payload = ""
@@ -19,7 +19,7 @@ if __name__ == '__main__':
     payload = open(payload, "rb").read()
     encrypted_shellcode, payload_hash, salt = encryption.shellcode_encryption(payload)
     
-    # Create template and compile
-    compiler.create_template(encrypted_shellcode, payload_hash, salt)
+    builder.create_stub(encrypted_shellcode, payload_hash, salt)
+    evasion.obfuscate_c_file("/tmp/main.c")
     compiler.compile(filename)
     
