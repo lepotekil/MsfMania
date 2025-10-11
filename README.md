@@ -1,4 +1,21 @@
 # MsfMania
+
+<div align="center">
+
+![GitHub stars](https://img.shields.io/github/stars/lepotekil/MsfMania?style=flat&color=yellow)
+![GitHub forks](https://img.shields.io/github/forks/lepotekil/MsfMania?style=flat&color=blue)
+![GitHub issues](https://img.shields.io/github/issues/lepotekil/MsfMania?style=flat&color=red)
+![GitHub last commit](https://img.shields.io/github/last-commit/lepotekil/MsfMania?style=flat&color=orange)
+![GitHub release](https://img.shields.io/github/v/release/lepotekil/MsfMania?style=flat&color=purple)
+
+![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
+![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
+![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)
+![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)
+
+</div>
+
 MsfMania is a Python-based command-line tool specifically designed to bypass EDR detection on Windows systems.
 
 <div align="center">
