@@ -109,8 +109,6 @@ def extract_binary_metadata(target_exe):
     icons = extract_and_save_icons(target_exe)
     if icons:
         print(f"[+] Extracted {len(icons)} icon(s)")
-        for icon in icons:
-            print(f"    Icon: {icon['width']}x{icon['height']} {icon['bit_count']}bpp (ID: {icon['icon_id']})")
         metadata['icons'] = icons
     else:
         metadata['icons'] = []
@@ -132,7 +130,6 @@ def extract_and_save_icons(exe_path):
     for old_file in old_icons + old_rc + old_res:
         try:
             os.remove(old_file)
-            print(f"[~] Cleaned: {old_file}")
         except:
             pass
     

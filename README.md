@@ -1,7 +1,33 @@
 # MsfMania
 MsfMania is a Python-based command-line tool specifically designed to bypass EDR detection on Windows systems.
 
-![alt text](https://github.com/lepotekil/MsfMania/blob/dev/assets/images/virustotal-2021.png)
+<div align="center">
+
+## Screenshots
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/lepotekil/MsfMania/blob/dev/assets/images/msfmania-2025.png" alt="MsfMania Interface" width="400"/>
+      <br/>
+      <sub><b>MsfMania Interface</b></sub>
+    </td>
+    <td align="center">
+      <img src="https://github.com/lepotekil/MsfMania/blob/dev/assets/images/payload-2025.png" alt="Payload Generation" width="400"/>
+      <br/>
+      <sub><b>Payload Generation Process</b></sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" colspan="2">
+      <img src="https://github.com/lepotekil/MsfMania/blob/dev/assets/images/virustotal-2021.png" alt="VirusTotal Results" width="600"/>
+      <br/>
+      <sub><b>VirusTotal Detection Results</b></sub>
+    </td>
+  </tr>
+</table>
+
+</div>
 
 ## Summary
 * [Features](#features)
@@ -70,7 +96,7 @@ options:
 
 ### Complete example
 ```bash
-# docker run --rm -v "$(pwd):/app/output" msfmania:latest python3 main.py -p msfmania/assets/bins/win_x64_msgbox_msfvenom_20251010.bin -o output/payload --strip --spoof-bin assets/bitsadmin_11-21H2_KB5032192.exe
+# docker run --rm -v "$(pwd):/app/output" msfmania:latest python3 main.py -p msfmania/assets/bins/win_x64_msgbox_msfvenom_20251010.bin -o output/payload_test_$(date +%s) --keysize 1 --spoof-bin assets/bins/explorer_11-24H2_KB5065789.exe
                                                                            
                 ███╗   ███╗███████╗███████╗███╗   ███╗ █████╗ ███╗   ██╗██╗ █████╗ 
                 ████╗ ████║██╔════╝██╔════╝████╗ ████║██╔══██╗████╗  ██║██║██╔══██╗
@@ -115,11 +141,11 @@ options:
     Icon: 64x64 4bpp (ID: 105)
     Icon: 64x64 8bpp (ID: 106)
     Icon: 22x22 32bpp (ID: 108)
-[~] Compiling to: /app/output/output/payload_test_1760179998.exe
-[~] Compiling resource file: /tmp/payload_test_1760179998.rc
-[+] Resource file compiled: /tmp/payload_test_1760179998.res
-[+] Compilation successful: /app/output/output/payload_test_1760179998.exe
-[+] Binary size: 398ko
+[~] Compiling to: /app/output/output/payload_test_1760181279.exe
+[~] Compiling resource file: /tmp/payload_test_1760181279.rc
+[+] Resource file compiled: /tmp/payload_test_1760181279.res
+[+] Compilation successful: /app/output/output/payload_test_1760181279.exe
+[+] Binary size: 396ko
 [+] C source copied to: /app/output/examples/main.c
 ```
 
