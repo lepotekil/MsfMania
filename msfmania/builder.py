@@ -1,4 +1,5 @@
 from os import makedirs
+import os
 
 def create_stub(encrypted_shellcode, payload_hash, salt, key_size):
     # Read stub template
@@ -11,7 +12,8 @@ def create_stub(encrypted_shellcode, payload_hash, salt, key_size):
     content = content.replace("SALT_PLACEHOLDER", salt)
     content = content.replace("KEY_SIZE_PLACEHOLDER", str(key_size))
     
-    # Create /tmp and write main.c
     makedirs("/tmp", exist_ok=True)
-    with open("/tmp/main.c", 'w') as f:
+    stub_path = "/tmp/main.c"
+    
+    with open(stub_path, 'w') as f:
         f.write(content)
