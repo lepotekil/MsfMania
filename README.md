@@ -19,7 +19,7 @@ MsfMania is a Python-based command-line tool specifically designed to bypass EDR
 - zlib compression before encryption
 - Base64 encoding for obfuscation
 - Recursive key bruteforce in stub
-- Binary metadata spoofing (version info, company, description, etc.)
+- Binary metadata spoofing (version info, company, description, icon, etc...)
 - Executable stripping for reduced file size
 - Cross-compilation with MinGW
 
