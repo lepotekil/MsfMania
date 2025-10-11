@@ -16,7 +16,9 @@
 
 </div>
 
-MsfMania is a Python-based command-line tool specifically designed to bypass EDR detection on Windows systems.
+**MsfMania** is an advanced Python-based payload obfuscation framework designed to evade EDR/AV detection on Windows systems. It generates highly polymorphic executables through dynamic code generation, multi-layer encryption (RC4), and sophisticated binary metadata spoofing techniques.
+
+> ⚠️ **Educational Purpose Only** - This tool is designed for authorized security testing and research purposes.
 
 <div align="center">
 
