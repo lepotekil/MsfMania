@@ -1,9 +1,7 @@
 # MsfMania
 MsfMania is a Python-based command-line tool specifically designed to bypass EDR detection on Windows systems.
 
-![alt text](https://github.com/lepotekil/MsfMania/blob/master/VirusTotal.png)
-
-![alt text](https://github.com/lepotekil/MsfMania/blob/master/MsfMania.png)
+![alt text](https://github.com/lepotekil/MsfMania/blob/dev/assets/images/virustotal-2021.png)
 
 ## Summary
 * [Features](#features)
