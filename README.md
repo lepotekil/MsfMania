@@ -31,7 +31,43 @@ MsfMania is a Python-based command-line tool specifically designed to bypass EDR
 
 ## Usage
 ```
-docker run --rm -v "$(pwd):/app/output" msfmania:latest python3 main.py -p msfmania/assets/bins/win_x64_msgbox_msfvenom_20251010.bin -o payload 
+# docker run --rm -v "$(pwd):/app/output" msfmania:latest
+                                                                              
+                ███╗   ███╗███████╗███████╗███╗   ███╗ █████╗ ███╗   ██╗██╗ █████╗ 
+                ████╗ ████║██╔════╝██╔════╝████╗ ████║██╔══██╗████╗  ██║██║██╔══██╗
+                ██╔████╔██║███████╗█████╗  ██╔████╔██║███████║██╔██╗ ██║██║███████║
+                ██║╚██╔╝██║╚════██║██╔══╝  ██║╚██╔╝██║██╔══██║██║╚██╗██║██║██╔══██║
+                ██║ ╚═╝ ██║███████║██║     ██║ ╚═╝ ██║██║  ██║██║ ╚████║██║██║  ██║
+                ╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝                                                                                                                                                                                                                   
+             Version : 3.0   -   Author : Killian CASAROTTO   -  Updated : 10/11/2025           
+    
+usage: main.py [-h] -p PAYLOAD -o OUTPUT [-k {1,2,3}] [-s]
+
+options:
+  -h, --help            show this help message and exit
+  -p, --payload PAYLOAD
+                        Select the payload file to use (ex: cobalt64.bin)
+  -o, --output OUTPUT   Output path including filename (ex:
+                        /path/to/output/payload)
+  -k, --keysize {1,2,3}
+                        RC4 key size in bytes (1-3)
+  -s, --strip           Strip the executable
+```
+```
+# docker run --rm -v "$(pwd):/app/output" msfmania:latest python3 main.py -p msfmania/assets/bins/win_x64_msgbox_msfvenom_20251010.bin -o output/payload
+                                                                           
+                ███╗   ███╗███████╗███████╗███╗   ███╗ █████╗ ███╗   ██╗██╗ █████╗ 
+                ████╗ ████║██╔════╝██╔════╝████╗ ████║██╔══██╗████╗  ██║██║██╔══██╗
+                ██╔████╔██║███████╗█████╗  ██╔████╔██║███████║██╔██╗ ██║██║███████║
+                ██║╚██╔╝██║╚════██║██╔══╝  ██║╚██╔╝██║██╔══██║██║╚██╗██║██║██╔══██║
+                ██║ ╚═╝ ██║███████║██║     ██║ ╚═╝ ██║██║  ██║██║ ╚████║██║██║  ██║
+                ╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝                                                                                                                                                                                                                   
+             Version : 3.0   -   Author : Killian CASAROTTO   -  Updated : 10/11/2025           
+    
+[~] Compiling to: /app/output/output/payload.exe
+[+] Compilation successful: /app/output/output/payload.exe
+[+] Binary stripped: 306ko -> 83ko
+[+] C source copied to: /app/output/examples/main.c
 ```
 
 ## Disclaimer
