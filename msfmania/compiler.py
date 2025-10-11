@@ -24,12 +24,15 @@ def compile(output_path, strip=False, resource_info=None, stub_path="/tmp/main.c
         rc_path = create_resource_file(resource_info, filename)
         if rc_path:
             res_path = rc_path.replace('.rc', '.res')
-            rc_result = system(f"x86_64-w64-mingw32-windres {rc_path} -O coff -o {res_path} > /dev/null 2>&1")
+            print(f"[~] Compiling resource file: {rc_path}")
+            rc_result = system(f"x86_64-w64-mingw32-windres {rc_path} -O coff -o {res_path}")
             if rc_result == 0:
                 resource_flags = f"{res_path}"
-                print(f"[+] Resource file compiled")
+                print(f"[+] Resource file compiled: {res_path}")
             else:
-                print(f"[x] Resource compilation failed")
+                print(f"[x] Resource compilation failed (exit code: {rc_result})")
+                # Show RC file content for debugging
+                system(f"echo '[DEBUG] RC file content:' && cat {rc_path}")
     
     # Compile the C stub file
     result = system(
@@ -116,6 +119,14 @@ def create_resource_file(resource_info, filename):
         lang_codepage = resource_info.get('lang_codepage', '040904b0')
         
         with open(rc_path, 'w') as f:
+            # Icons
+            icons = resource_info.get('icons', [])
+            if icons:
+                for idx, icon in enumerate(icons):
+                    icon_id = idx + 1  # Start from 1
+                    f.write(f'{icon_id} ICON "{icon["path"]}"\n')
+                f.write('\n')
+            
             # Version info
             f.write('1 VERSIONINFO\n')
             f.write(f'FILEVERSION {file_ver_num[0]},{file_ver_num[1]},{file_ver_num[2]},{file_ver_num[3]}\n')
