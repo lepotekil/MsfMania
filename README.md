@@ -8,19 +8,19 @@ MsfMania is a Python-based command-line tool specifically designed to bypass EDR
 <table>
   <tr>
     <td align="center">
-      <img src="https://github.com/lepotekil/MsfMania/blob/dev/assets/images/msfmania-2025.png" alt="MsfMania Interface" width="400"/>
+      <img src="https://github.com/lepotekil/MsfMania/blob/dev/assets/images/msfmania-2025.png" alt="MsfMania output" width="400"/>
       <br/>
       <sub><b>MsfMania Interface</b></sub>
     </td>
     <td align="center">
-      <img src="https://github.com/lepotekil/MsfMania/blob/dev/assets/images/payload-2025.png" alt="Payload Generation" width="400"/>
+      <img src="https://github.com/lepotekil/MsfMania/blob/dev/assets/images/payload-2025.png" alt="Payload execution logs" width="400"/>
       <br/>
       <sub><b>Payload Generation Process</b></sub>
     </td>
   </tr>
   <tr>
     <td align="center" colspan="2">
-      <img src="https://github.com/lepotekil/MsfMania/blob/dev/assets/images/virustotal-2021.png" alt="VirusTotal Results" width="600"/>
+      <img src="https://github.com/lepotekil/MsfMania/blob/dev/assets/images/virustotal-2021.png" alt="VirusTotal results" width="600"/>
       <br/>
       <sub><b>VirusTotal Detection Results</b></sub>
     </td>
