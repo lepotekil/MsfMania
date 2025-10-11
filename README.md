@@ -115,37 +115,11 @@ options:
 [~] Found 23 icon groups with 181 icons
 [+] Extracted 26 unique icon(s) from 181 total
 [+] Extracted 26 icon(s)
-    Icon: 256x256 32bpp (ID: 1)
-    Icon: 64x64 32bpp (ID: 2)
-    Icon: 48x48 32bpp (ID: 3)
-    Icon: 40x40 32bpp (ID: 4)
-    Icon: 32x32 32bpp (ID: 5)
-    Icon: 24x24 32bpp (ID: 6)
-    Icon: 20x20 32bpp (ID: 7)
-    Icon: 16x16 32bpp (ID: 8)
-    Icon: 32x32 4bpp (ID: 9)
-    Icon: 24x24 4bpp (ID: 10)
-    Icon: 16x16 4bpp (ID: 11)
-    Icon: 32x32 8bpp (ID: 12)
-    Icon: 24x24 8bpp (ID: 13)
-    Icon: 16x16 8bpp (ID: 14)
-    Icon: 48x48 4bpp (ID: 18)
-    Icon: 48x48 8bpp (ID: 21)
-    Icon: 32x32 1bpp (ID: 40)
-    Icon: 40x40 4bpp (ID: 115)
-    Icon: 20x20 4bpp (ID: 117)
-    Icon: 40x40 8bpp (ID: 119)
-    Icon: 20x20 8bpp (ID: 121)
-    Icon: 22x22 4bpp (ID: 95)
-    Icon: 22x22 8bpp (ID: 96)
-    Icon: 64x64 4bpp (ID: 105)
-    Icon: 64x64 8bpp (ID: 106)
-    Icon: 22x22 32bpp (ID: 108)
-[~] Compiling to: /app/output/output/payload_test_1760181279.exe
-[~] Compiling resource file: /tmp/payload_test_1760181279.rc
-[+] Resource file compiled: /tmp/payload_test_1760181279.res
-[+] Compilation successful: /app/output/output/payload_test_1760181279.exe
-[+] Binary size: 396ko
+[~] Compiling to: /app/output/output/payload_test_1760182164.exe
+[~] Compiling resource file: /tmp/payload_test_1760182164.rc
+[+] Resource file compiled: /tmp/payload_test_1760182164.res
+[+] Compilation successful: /app/output/output/payload_test_1760182164.exe
+[+] Binary size: 397ko
 [+] C source copied to: /app/output/examples/main.c
 ```
 
