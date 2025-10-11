@@ -6,10 +6,12 @@ MsfMania is a Python-based command-line tool specifically designed to bypass EDR
 ![alt text](https://github.com/lepotekil/MsfMania/blob/master/MsfMania.png)
 
 ## Summary
-* [Features](#Features)
-* [Requirements](#Requirements)
-* [Installation](#Installation)
-* [Usage](#Usage)
+* [Features](#features)
+* [Requirements](#requirements)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Disclaimer](#disclaimer)
+* [License](#license)
 
 ## Features
 - Polymorphic C stub with variable/function obfuscation
