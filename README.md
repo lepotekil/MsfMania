@@ -4,7 +4,7 @@
 
 ![GitHub stars](https://img.shields.io/github/stars/lepotekil/MsfMania?style=flat&color=blue)
 ![GitHub forks](https://img.shields.io/github/forks/lepotekil/MsfMania?style=flat&color=blue)
-![GitHub issues](https://img.shields.io/github/issues/lepotekil/MsfMania?style=flat&color=bue)
+![GitHub issues](https://img.shields.io/github/issues/lepotekil/MsfMania?style=flat&color=blue)
 ![GitHub last commit](https://img.shields.io/github/last-commit/lepotekil/MsfMania?style=flat&color=blue)
 ![GitHub release](https://img.shields.io/github/v/release/lepotekil/MsfMania?style=flat&color=blue)
 
