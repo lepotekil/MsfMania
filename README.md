@@ -12,10 +12,16 @@ MsfMania is a Python-based command-line tool specifically designed to bypass EDR
 * [Usage](#Usage)
 
 ## Features
-- Polymorphic C stub.
+- Polymorphic C stub with variable/function obfuscation
 - Local memory injection
-- Custom RC4 algorithm payload encryption
-- Cross-compilation with MinGW.
+- RC4 encryption with configurable key size (1-3 bytes)
+- Payload integrity verification using djb2 hash with random salt
+- zlib compression before encryption
+- Base64 encoding for obfuscation
+- Recursive key bruteforce in stub
+- Binary metadata spoofing (version info, company, description, etc.)
+- Executable stripping for reduced file size
+- Cross-compilation with MinGW
 
 ## Requirements
 - Electricity
@@ -30,7 +36,9 @@ MsfMania is a Python-based command-line tool specifically designed to bypass EDR
 - Build the MsfMania docker image: ```docker build -t msfmania:latest .```
 
 ## Usage
-```
+
+### Basic Help
+```bash
 # docker run --rm -v "$(pwd):/app/output" msfmania:latest
                                                                               
                 ███╗   ███╗███████╗███████╗███╗   ███╗ █████╗ ███╗   ██╗██╗ █████╗ 
@@ -57,7 +65,11 @@ options:
                         Spoof binary metadata from target executable (ex:
                         assets/explorer_11-24H2_KB5065789.exe)
 ```
-```
+
+---
+
+### Complete example
+```bash
 # docker run --rm -v "$(pwd):/app/output" msfmania:latest python3 main.py -p msfmania/assets/bins/win_x64_msgbox_msfvenom_20251010.bin -o output/payload --strip --spoof-bin assets/bitsadmin_11-21H2_KB5032192.exe
                                                                            
                 ███╗   ███╗███████╗███████╗███╗   ███╗ █████╗ ███╗   ██╗██╗ █████╗ 
@@ -80,6 +92,8 @@ options:
 [+] Binary stripped: 307ko -> 84ko
 [+] C source copied to: /app/output/examples/main.c
 ```
+
+---
 
 ## Disclaimer
 This project is for educational purposes only. Use it at your own risk.
