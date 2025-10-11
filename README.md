@@ -31,10 +31,8 @@
 - [Usage](#usage)
   - [Basic Help](#basic-help)
   - [Complete Example](#complete-example)
-- [How It Works](#how-it-works)
 - [Disclaimer](#disclaimer)
 - [License](#license)
-- [Contributing](#contributing)
 
 ---
 
@@ -154,22 +152,6 @@ options:
 
 ---
 
-## How It Works
-
-MsfMania employs multiple layers of obfuscation and evasion techniques:
-
-1. **Polymorphic Code Generation**: Each compilation generates unique C source code with randomized variable and function names
-2. **Multi-Layer Encryption**: 
-   - zlib compression reduces payload size
-   - RC4 encryption with configurable key size (1-3 bytes)
-   - Base64 encoding for additional obfuscation
-3. **Payload Integrity**: djb2 hash with random salt ensures payload verification
-4. **Metadata Spoofing**: Clone legitimate Windows executables' metadata, icons, and version information
-5. **Brute Force Decryption**: Stub performs recursive key bruteforce to decrypt and execute payload
-6. **Memory Injection**: Direct local memory injection without touching disk
-
----
-
 ## Disclaimer
 
 ⚠️ **IMPORTANT**: This project is for **educational and authorized security testing purposes only**.
@@ -184,25 +166,3 @@ MsfMania employs multiple layers of obfuscation and evasion techniques:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes:
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-<div align="center">
-
-**Made with ❤️ by [Killian CASAROTTO](https://github.com/lepotekil)**
-
-⭐ Star this repository if you find it useful!
-
-</div>
