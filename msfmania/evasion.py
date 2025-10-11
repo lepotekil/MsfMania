@@ -2,6 +2,7 @@ import re
 import random
 import string
 import os
+import pefile
 
 def generate_random_name(min_length=8, max_length=256):
     """Generate a random valid C identifier"""
@@ -149,3 +150,98 @@ def obfuscate_c_file(file_path):
     # Replace original file
     os.remove(file_path)
     os.rename(temp_path, file_path)
+
+def extract_binary_metadata(target_exe):
+    """Extract metadata from target executable using pefile"""
+    print(f"[~] Extracting metadata from: {target_exe}")
+    
+    if not os.path.exists(target_exe):
+        print(f"[x] Target file not found: {target_exe}")
+        return None
+    
+    metadata = {
+        'file_description': 'Windows Application',
+        'file_version': '1.0.0.0',
+        'file_version_num': (1, 0, 0, 0),
+        'product_name': 'Application',
+        'product_version': '1.0.0.0',
+        'product_version_num': (1, 0, 0, 0),
+        'company_name': 'Microsoft Corporation',
+        'copyright': 'Copyright (C) Microsoft Corporation. All rights reserved.',
+        'original_filename': os.path.basename(target_exe),
+        'internal_name': os.path.splitext(os.path.basename(target_exe))[0],
+        'lang_codepage': '040904b0'
+    }
+    
+    try:
+        pe = pefile.PE(target_exe)
+        
+        # Extract numeric version from FixedFileInfo
+        if hasattr(pe, 'VS_FIXEDFILEINFO'):
+            fixed_info = pe.VS_FIXEDFILEINFO[0]
+            file_ver_ms = fixed_info.FileVersionMS
+            file_ver_ls = fixed_info.FileVersionLS
+            prod_ver_ms = fixed_info.ProductVersionMS
+            prod_ver_ls = fixed_info.ProductVersionLS
+            
+            metadata['file_version_num'] = (
+                (file_ver_ms >> 16) & 0xFFFF,
+                file_ver_ms & 0xFFFF,
+                (file_ver_ls >> 16) & 0xFFFF,
+                file_ver_ls & 0xFFFF
+            )
+            metadata['product_version_num'] = (
+                (prod_ver_ms >> 16) & 0xFFFF,
+                prod_ver_ms & 0xFFFF,
+                (prod_ver_ls >> 16) & 0xFFFF,
+                prod_ver_ls & 0xFFFF
+            )
+        
+        # Extract version info using FileInfo
+        if hasattr(pe, 'FileInfo'):
+            for file_info in pe.FileInfo:
+                for file_info_entry in file_info:
+                    if hasattr(file_info_entry, 'StringTable'):
+                        for string_table in file_info_entry.StringTable:
+                            if hasattr(string_table, 'name'):
+                                lang_str = string_table.name
+                                if isinstance(lang_str, bytes):
+                                    lang_str = lang_str.decode('utf-8', errors='ignore')
+                                if lang_str:
+                                    metadata['lang_codepage'] = lang_str
+                            
+                            for entry in string_table.entries.items():
+                                key, value = entry
+                                key = key.decode('utf-8', errors='ignore')
+                                value = value.decode('utf-8', errors='ignore')
+                                
+                                if key == 'FileDescription' and value.strip():
+                                    metadata['file_description'] = value.strip()
+                                elif key == 'FileVersion' and value.strip():
+                                    metadata['file_version'] = value.strip()
+                                elif key == 'ProductName' and value.strip():
+                                    metadata['product_name'] = value.strip()
+                                elif key == 'ProductVersion' and value.strip():
+                                    metadata['product_version'] = value.strip()
+                                elif key == 'CompanyName' and value.strip():
+                                    metadata['company_name'] = value.strip()
+                                elif key == 'LegalCopyright' and value.strip():
+                                    metadata['copyright'] = value.strip()
+                                elif key == 'InternalName' and value.strip():
+                                    metadata['internal_name'] = value.strip()
+                                elif key == 'OriginalFilename' and value.strip():
+                                    metadata['original_filename'] = value.strip()
+        
+        pe.close()
+        
+    except Exception as e:
+        print(f"[x] Failed to parse PE file: {e}")
+        return None
+    
+    print(f"[+] Extracted metadata:")
+    print(f"    Description: {metadata['file_description']}")
+    print(f"    Version: {metadata['file_version']}")
+    print(f"    Company: {metadata['company_name']}")
+    print(f"    Product: {metadata['product_name']}")
+    
+    return metadata

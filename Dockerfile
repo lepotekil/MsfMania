@@ -15,8 +15,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     binutils-mingw-w64-x86-64 \
     zlib1g-dev \
     libz-mingw-w64-dev \
+    binutils \
+    icoutils \
     && rm -rf /var/lib/apt/lists/* \
-    && apt-get clean
+    && apt-get clean \
+    && pip install pefile
 
 # Set working directory
 WORKDIR /app
