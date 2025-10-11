@@ -2,17 +2,17 @@
 
 <div align="center">
 
-![GitHub stars](https://img.shields.io/github/stars/lepotekil/MsfMania?style=flat&color=blue)
-![GitHub forks](https://img.shields.io/github/forks/lepotekil/MsfMania?style=flat&color=blue)
-![GitHub issues](https://img.shields.io/github/issues/lepotekil/MsfMania?style=flat&color=blue)
-![GitHub last commit](https://img.shields.io/github/last-commit/lepotekil/MsfMania?style=flat&color=blue)
-![GitHub release](https://img.shields.io/github/v/release/lepotekil/MsfMania?style=flat&color=blue)
+![GitHub stars](https://img.shields.io/github/stars/lepotekil/MsfMania?style=flat&color=ff6b35)
+![GitHub forks](https://img.shields.io/github/forks/lepotekil/MsfMania?style=flat&color=1e3a8a)
+![GitHub issues](https://img.shields.io/github/issues/lepotekil/MsfMania?style=flat&color=ff6b35)
+![GitHub last commit](https://img.shields.io/github/last-commit/lepotekil/MsfMania?style=flat&color=1e3a8a)
+![GitHub release](https://img.shields.io/github/v/release/lepotekil/MsfMania?style=flat&color=ff6b35)
 
-![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
-![Platform](https://img.shields.io/badge/Platform-Windows-blue.svg)
-![License](https://img.shields.io/badge/License-MIT-blue.svg)
-![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)
-![Status](https://img.shields.io/badge/Status-Active-blue.svg)
+![Python](https://img.shields.io/badge/Python-3.8+-1e3a8a.svg)
+![Platform](https://img.shields.io/badge/Platform-Windows-ff6b35.svg)
+![License](https://img.shields.io/badge/License-MIT-1e3a8a.svg)
+![Docker](https://img.shields.io/badge/Docker-Ready-ff6b35.svg)
+![Status](https://img.shields.io/badge/Status-Active-1e3a8a.svg)
 
 </div>
 
