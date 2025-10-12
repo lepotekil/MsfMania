@@ -43,19 +43,19 @@
 <table>
   <tr>
     <td align="center">
-      <img src="https://github.com/lepotekil/MsfMania/blob/dev/assets/images/msfmania-2025.png" alt="MsfMania" width="400"/>
+      <img src="https://github.com/lepotekil/MsfMania/blob/master/assets/images/msfmania-2025.png" alt="MsfMania" width="400"/>
       <br/>
       <sub><b>MsfMania</b></sub>
     </td>
     <td align="center">
-      <img src="https://github.com/lepotekil/MsfMania/blob/dev/assets/images/payload-2025.png" alt="Payload Execution Logs" width="400"/>
+      <img src="https://github.com/lepotekil/MsfMania/blob/master/assets/images/payload-2025.png" alt="Payload Execution Logs" width="400"/>
       <br/>
       <sub><b>Payload Execution Logs</b></sub>
     </td>
   </tr>
   <tr>
     <td align="center" colspan="2">
-      <img src="https://github.com/lepotekil/MsfMania/blob/dev/assets/images/virustotal-2021.png" alt="VirusTotal Detection Results" width="600"/>
+      <img src="https://github.com/lepotekil/MsfMania/blob/master/assets/images/virustotal-2021.png" alt="VirusTotal Detection Results" width="600"/>
       <br/>
       <sub><b>VirusTotal Detection Results</b></sub>
     </td>
@@ -100,7 +100,7 @@
                 ██║╚██╔╝██║╚════██║██╔══╝  ██║╚██╔╝██║██╔══██║██║╚██╗██║██║██╔══██║
                 ██║ ╚═╝ ██║███████║██║     ██║ ╚═╝ ██║██║  ██║██║ ╚████║██║██║  ██║
                 ╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝                                                                                                                                                                                                                   
-             Version : 3.0   -   Author : Killian CASAROTTO   -  Updated : 10/11/2025           
+            Version : 3.0.0   -   Author : Killian CASAROTTO   -  Updated : 10/12/2025           
     
 usage: main.py [-h] -p PAYLOAD -o OUTPUT [-k {1,2,3}] [-s]
                [--spoof-bin TARGET_EXE]
@@ -116,14 +116,14 @@ options:
   -s, --strip           Strip the executable
   --spoof-bin TARGET_EXE
                         Spoof binary metadata from target executable (ex:
-                        assets/explorer_11-24H2_KB5065789.exe)
+                        assets/bins/bitsadmin_11-21H2_KB5032192.exe)
 ```
 
 ---
 
 ### Complete example
 ```bash
-# docker run --rm -v "$(pwd):/app/output" msfmania:latest python3 main.py -p msfmania/assets/bins/win_x64_msgbox_msfvenom_20251010.bin -o output/payload_test_$(date +%s) --keysize 1 --spoof-bin assets/bins/explorer_11-24H2_KB5065789.exe
+# docker run --rm -v "$(pwd):/app/output" msfmania:latest python3 main.py -p msfmania/assets/bins/win_x64_msgbox_msfvenom_20251010.bin -o output/payload_test_$(date +%s) --keysize 3 --spoof-bin assets/bins/explorer_11-24H2_KB5065789.exe
                                                                            
                 ███╗   ███╗███████╗███████╗███╗   ███╗ █████╗ ███╗   ██╗██╗ █████╗ 
                 ████╗ ████║██╔════╝██╔════╝████╗ ████║██╔══██╗████╗  ██║██║██╔══██╗
@@ -131,7 +131,7 @@ options:
                 ██║╚██╔╝██║╚════██║██╔══╝  ██║╚██╔╝██║██╔══██║██║╚██╗██║██║██╔══██║
                 ██║ ╚═╝ ██║███████║██║     ██║ ╚═╝ ██║██║  ██║██║ ╚████║██║██║  ██║
                 ╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝                                                                                                                                                                                                                   
-             Version : 3.0   -   Author : Killian CASAROTTO   -  Updated : 10/11/2025           
+            Version : 3.0.0   -   Author : Killian CASAROTTO   -  Updated : 10/12/2025           
     
 [~] Extracting metadata from: assets/bins/explorer_11-24H2_KB5065789.exe
 [+] Extracted metadata:
@@ -142,11 +142,11 @@ options:
 [~] Found 23 icon groups with 181 icons
 [+] Extracted 26 unique icon(s) from 181 total
 [+] Extracted 26 icon(s)
-[~] Compiling to: /app/output/output/payload_test_1760182164.exe
-[~] Compiling resource file: /tmp/payload_test_1760182164.rc
-[+] Resource file compiled: /tmp/payload_test_1760182164.res
-[+] Compilation successful: /app/output/output/payload_test_1760182164.exe
-[+] Binary size: 397ko
+[~] Compiling to: /app/output/output/payload_test_1760248193.exe
+[~] Compiling resource file: /tmp/payload_test_1760248193.rc
+[+] Resource file compiled: /tmp/payload_test_1760248193.res
+[+] Compilation successful: /app/output/output/payload_test_1760248193.exe
+[+] Binary size: 266ko
 [+] C source copied to: /app/output/examples/main.c
 ```
 

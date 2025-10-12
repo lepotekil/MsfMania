@@ -41,7 +41,7 @@ def compile(output_path, strip=False, resource_info=None, stub_path="/tmp/main.c
         f"-O2 -g "                       
         f"-fno-exceptions -fno-asynchronous-unwind-tables "  
         f"-static -static-libgcc -static-libstdc++ "
-        # f"-mwindows "
+        f"-mwindows "
         f"-Wl,--nxcompat -Wl,--dynamicbase "
         f"{stub_path} {resource_flags} -o {full_output_path} -lz"
     )
