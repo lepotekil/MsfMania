@@ -9,14 +9,13 @@
 ![GitHub release](https://img.shields.io/github/v/release/lepotekil/MsfMania?style=flat&color=ff6b35)
 
 ![Python](https://img.shields.io/badge/Python-3.8+-1e3a8a.svg)
-![Platform](https://img.shields.io/badge/Platform-Windows-ff6b35.svg)
-![License](https://img.shields.io/badge/License-MIT-1e3a8a.svg)
-![Docker](https://img.shields.io/badge/Docker-Ready-ff6b35.svg)
-![Status](https://img.shields.io/badge/Status-Active-1e3a8a.svg)
+![License](https://img.shields.io/badge/License-MIT-ff6b35.svg)
+![Docker](https://img.shields.io/badge/Docker-Ready-1e3a8a.svg)
+![Status](https://img.shields.io/badge/Status-Active-ff6b35.svg)
 
 </div>
 
-**MsfMania** is an advanced Python-based payload obfuscation framework designed to evade EDR/AV detection on Windows systems. It generates highly polymorphic executables through dynamic code generation, multi-layer encryption (RC4), and sophisticated binary metadata spoofing techniques.
+**MsfMania** is an advanced Python-based payload obfuscation framework designed to evade EDR/AV detection on Windows systems. It generates highly polymorphic executables through dynamic code generation, multi-layer encryption (RC4), and binary metadata spoofing.
 
 > ⚠️ **Educational Purpose Only** - This tool is designed for authorized security testing and research purposes.
 
@@ -67,7 +66,7 @@
 ## Features
 - Polymorphic C stub with variable/function obfuscation
 - Local memory injection
-- RC4 encryption with configurable key size (1-3 bytes)
+- Custom RC4 encryption algorithm with configurable key size (1-3 bytes)
 - Payload integrity verification using djb2 hash with random salt
 - zlib compression before encryption
 - Base64 encoding for obfuscation
