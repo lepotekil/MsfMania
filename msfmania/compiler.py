@@ -2,7 +2,7 @@ from os import system, makedirs
 import os
 import re
 
-def compile(output_path, strip=False, resource_info=None, stub_path="/tmp/main.c"):
+def compile(stub_path, output_path, strip=False, resource_info=None):
     output_dir = os.path.dirname(output_path)
     filename = os.path.basename(output_path)
     
