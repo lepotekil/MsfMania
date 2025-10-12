@@ -2,14 +2,40 @@ import re
 import os
 from . import utils
 
-# Minimal C keywords (only language keywords, not library functions)
+# Exhaustive C keywords (C89, C99, C11, C17, C23)
 C_KEYWORDS = {
+    # C89/C90 keywords
     'auto', 'break', 'case', 'char', 'const', 'continue', 'default', 'do',
     'double', 'else', 'enum', 'extern', 'float', 'for', 'goto', 'if',
-    'inline', 'int', 'long', 'register', 'restrict', 'return', 'short',
-    'signed', 'sizeof', 'static', 'struct', 'switch', 'typedef', 'union',
-    'unsigned', 'void', 'volatile', 'while', 'NULL', 'true', 'false',
-    '_Bool', '_Complex', '_Imaginary', 'main'
+    'int', 'long', 'register', 'return', 'short', 'signed', 'sizeof',
+    'static', 'struct', 'switch', 'typedef', 'union', 'unsigned', 'void',
+    'volatile', 'while',
+    # C99 keywords
+    'inline', 'restrict', '_Bool', '_Complex', '_Imaginary',
+    # C11 keywords
+    '_Alignas', '_Alignof', '_Atomic', '_Static_assert', '_Noreturn',
+    '_Thread_local', '_Generic',
+    # C23 keywords
+    '_BitInt', 'typeof', 'typeof_unqual', '_BitInt', '_Decimal128',
+    '_Decimal32', '_Decimal64', '_Bool',
+    # Common macros and constants (standard library)
+    'NULL', 'true', 'false', 'bool',
+    # Reserved entry points
+    'main', 'WinMain', 'DllMain', 'wWinMain',
+    # Common type names that should not be renamed
+    'size_t', 'ssize_t', 'ptrdiff_t', 'wchar_t', 'wint_t',
+    'int8_t', 'int16_t', 'int32_t', 'int64_t',
+    'uint8_t', 'uint16_t', 'uint32_t', 'uint64_t',
+    'intptr_t', 'uintptr_t', 'intmax_t', 'uintmax_t',
+    # Windows specific types (common)
+    'BOOL', 'BYTE', 'WORD', 'DWORD', 'QWORD', 'LONG', 'ULONG',
+    'HANDLE', 'HWND', 'HINSTANCE', 'LPVOID', 'LPCVOID', 'LPSTR',
+    'LPCSTR', 'LPWSTR', 'LPCWSTR', 'TCHAR', 'HMODULE', 'FARPROC',
+    # zlib types
+    'uLong', 'uLongf', 'Bytef', 'z_stream',
+    # Preprocessor directives (not technically keywords but reserved)
+    'defined', '__FILE__', '__LINE__', '__DATE__', '__TIME__',
+    '__STDC__', '__STDC_VERSION__', '__func__'
 }
 
 def remove_comments_from_file(file_path):
