@@ -64,45 +64,68 @@ int zlib_decompress(const unsigned char *src, int src_len, unsigned char *dst, i
     return (int)dest_len;
 }
 
-// RC4 state structure
+// RC4 state structure with split S-box
 typedef struct {
-    unsigned char S[256];
+    unsigned char S_tables[4][64];
     unsigned char i;
     unsigned char j;
 } rc4_state_t;
 
-// RC4 initialization (KSA)
-void rc4_init(rc4_state_t *st, const unsigned char *key, int keylen) {
-    int i, j = 0;
+// Helper to get S value at index
+unsigned char get_S(rc4_state_t *st, int idx) {
+    return st->S_tables[idx / 64][idx % 64];
+}
+
+// Helper to set S value at index
+void set_S(rc4_state_t *st, int idx, unsigned char val) {
+    st->S_tables[idx / 64][idx % 64] = val;
+}
+
+// RC4 initialization (KSA) adapted for split tables
+void rc4_init(rc4_state_t *st, const unsigned char *interm_key, int keylen) {
+    int idx, j = 0;
     unsigned char tmp;
     
-    for (i = 0; i < 256; i++) st->S[i] = (unsigned char)i;
+    // Initialize split S-tables to 0-255
+    for (int t = 0; t < 4; t++) {
+        for (int pos = 0; pos < 64; pos++) {
+            st->S_tables[t][pos] = (unsigned char)(t * 64 + pos);
+        }
+    }
     st->i = 0;
     st->j = 0;
     
-    for (i = 0; i < 256; i++) {
-        j = (j + st->S[i] + key[i % keylen]) % 256;
-        tmp = st->S[i];
-        st->S[i] = st->S[j];
-        st->S[j] = tmp;
+    // KSA using helpers
+    for (idx = 0; idx < 256; idx++) {
+        unsigned char s_val = get_S(st, idx);
+        j = (j + s_val + interm_key[idx % keylen]) % 256;
+        tmp = get_S(st, idx);
+        set_S(st, idx, get_S(st, j));
+        set_S(st, j, tmp);
     }
     st->i = 0;
     st->j = 0;
 }
 
-// RC4 decryption (PRGA)
-void rc4_decrypt(rc4_state_t *st, unsigned char *data, int len) {
+// RC4 decryption (PRGA) with feedback
+void rc4_decrypt(rc4_state_t *st, unsigned char *data, int len, const unsigned char *salt) {
     int k;
     unsigned char tmp, K;
     
     for (k = 0; k < len; k++) {
         st->i = (st->i + 1) % 256;
-        st->j = (st->j + st->S[st->i]) % 256;
-        tmp = st->S[st->i];
-        st->S[st->i] = st->S[st->j];
-        st->S[st->j] = tmp;
-        K = st->S[(st->S[st->i] + st->S[st->j]) % 256];
+        st->j = (st->j + get_S(st, st->i)) % 256;
+        // Swap using helpers
+        tmp = get_S(st, st->i);
+        set_S(st, st->i, get_S(st, st->j));
+        set_S(st, st->j, tmp);
+        // Keystream using helpers
+        int sum_idx = (get_S(st, st->i) + get_S(st, st->j)) % 256;
+        K = get_S(st, sum_idx);
         data[k] ^= K;
+        // Feedback: modify j with LSB of salt
+        unsigned char salt_bit = salt[k % 8] & 1;
+        st->j = (st->j + salt_bit) % 256;
     }
 }
 
@@ -135,8 +158,13 @@ int bruteforce_key(unsigned char *key, int pos, int max_len, unsigned char *b64_
     if (pos == max_len) {
         unsigned char rc4_decrypted[8192];
         unsigned char decompressed[8192];
+        unsigned char interm_key[3];  // Max key size 3
         
-        // Decrypt with RC4
+        // Derive intermediate key: XOR key with first bytes of expected_hash
+        for (int p = 0; p < max_len; p++) {
+            interm_key[p] = key[p] ^ expected_hash[p];
+        }
+        
         if (KEY_SIZE == 1) {
             // printf("[~] Testing RC4 key: %02x\n", key[0]);
         } else if (KEY_SIZE == 2) {
@@ -146,14 +174,13 @@ int bruteforce_key(unsigned char *key, int pos, int max_len, unsigned char *b64_
         }
         
         memcpy(rc4_decrypted, b64_decoded, decoded_len);
-        rc4_init(&rc4_state, key, max_len);
-        rc4_decrypt(&rc4_state, rc4_decrypted, decoded_len);
+        rc4_init(&rc4_state, interm_key, max_len);
+        rc4_decrypt(&rc4_state, rc4_decrypted, decoded_len, salt);
         
         // Decompress with zlib
         int decompressed_len = zlib_decompress(rc4_decrypted, decoded_len, decompressed, 8192);
         
         if (decompressed_len > 0) {
-            // Create buffer for hash validation
             // printf("[~] Validating hash\n");
             unsigned char hash_input[8192];
             memcpy(hash_input, decompressed, decompressed_len);
