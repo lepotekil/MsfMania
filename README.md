@@ -65,13 +65,14 @@
 
 ## Features
 - Polymorphic C stub with variable/function obfuscation
-- Local memory injection
-- Custom RC4 encryption algorithm with configurable key size (1-3 bytes)
+- Local memory injection (RWX)
+- RC4 variant using 4‑table S‑box & modified KSA/PRGA with configurable key size (1-3 bytes)
 - Payload integrity verification using djb2 hash with random salt
 - zlib compression before encryption
 - Base64 encoding for obfuscation
 - Recursive key bruteforce in stub
 - Binary metadata spoofing (version info, company, description, icon, etc...)
+- Dynamic junkcode injection for C
 - Executable stripping for reduced file size
 - Cross-compilation with MinGW
 
@@ -99,10 +100,10 @@
                 ██║╚██╔╝██║╚════██║██╔══╝  ██║╚██╔╝██║██╔══██║██║╚██╗██║██║██╔══██║
                 ██║ ╚═╝ ██║███████║██║     ██║ ╚═╝ ██║██║  ██║██║ ╚████║██║██║  ██║
                 ╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝                                                                                                                                                                                                                   
-            Version : 3.0.0   -   Author : Killian CASAROTTO   -  Updated : 10/12/2025           
+            Version : 3.0.1   -   Author : Killian CASAROTTO   -  Updated : 10/14/2025           
     
 usage: main.py [-h] -p PAYLOAD -o OUTPUT [-k {1,2,3}] [-s]
-               [--spoof-bin TARGET_EXE]
+               [--spoof-bin TARGET_EXE] [-j JUNKCODES]
 
 options:
   -h, --help            show this help message and exit
@@ -116,13 +117,15 @@ options:
   --spoof-bin TARGET_EXE
                         Spoof binary metadata from target executable (ex:
                         assets/bins/bitsadmin_11-21H2_KB5032192.exe)
+  -j, --junkcodes JUNKCODES
+                        Number of junkcodes to inject (default: 0)
 ```
 
 ---
 
 ### Complete example
 ```bash
-# docker run --rm -v "$(pwd):/app/output" msfmania:latest python3 main.py -p msfmania/assets/bins/win_x64_msgbox_msfvenom_20251010.bin -o output/payload_test_$(date +%s) --keysize 3 --spoof-bin assets/bins/explorer_11-24H2_KB5065789.exe
+# docker run --rm -v "$(pwd):/app/output" msfmania:latest python3 main.py -p msfmania/assets/bins/win_x64_msgbox_msfvenom_20251010.bin -o output/payload_test_$(date +%s) --keysize 3 --spoof-bin assets/bins/explorer_11-24H2_KB5065789.exe --junkcodes 1000
                                                                            
                 ███╗   ███╗███████╗███████╗███╗   ███╗ █████╗ ███╗   ██╗██╗ █████╗ 
                 ████╗ ████║██╔════╝██╔════╝████╗ ████║██╔══██╗████╗  ██║██║██╔══██╗
@@ -130,8 +133,21 @@ options:
                 ██║╚██╔╝██║╚════██║██╔══╝  ██║╚██╔╝██║██╔══██║██║╚██╗██║██║██╔══██║
                 ██║ ╚═╝ ██║███████║██║     ██║ ╚═╝ ██║██║  ██║██║ ╚████║██║██║  ██║
                 ╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝                                                                                                                                                                                                                   
-            Version : 3.0.0   -   Author : Killian CASAROTTO   -  Updated : 10/12/2025           
+            Version : 3.0.1   -   Author : Killian CASAROTTO   -  Updated : 10/14/2025           
     
+[~] Starting shellcode encryption (key size: 3)
+[~] Compressing shellcode (303 bytes)
+[+] Shellcode compressed to 284 bytes
+[~] Encrypting with modified RC4
+[+] Encryption completed: 284 bytes (b64: 380 bytes)
+[~] Injecting 1000 junkcodes...
+[~] Found 27 injection points in main()
+[~] Created 973 additional injection points
+[+] Inserted 1000/1000 function calls
+[+] 1000 junkcodes injected successfully
+[+] Successfully injected 1000 junkcodes
+[~] Applying obfuscation...
+[+] Obfuscated 145 identifiers
 [~] Extracting metadata from: assets/bins/explorer_11-24H2_KB5065789.exe
 [+] Extracted metadata:
     Description: Windows Explorer
@@ -141,12 +157,14 @@ options:
 [~] Found 23 icon groups with 181 icons
 [+] Extracted 26 unique icon(s) from 181 total
 [+] Extracted 26 icon(s)
-[~] Compiling to: /app/output/output/payload_test_1760248193.exe
-[~] Compiling resource file: /tmp/payload_test_1760248193.rc
-[+] Resource file compiled: /tmp/payload_test_1760248193.res
-[+] Compilation successful: /app/output/output/payload_test_1760248193.exe
-[+] Binary size: 266ko
+[~] Compiling to: /app/output/output/payload_test_1760467840.exe
+[~] Compiling resource file: /tmp/payload_test_1760467840.rc
+[+] Resource file compiled: /tmp/payload_test_1760467840.res
+[+] Compilation successful: /app/output/output/payload_test_1760467840.exe
+[+] Binary size: 405ko
 [+] C source copied to: /app/output/examples/main.c
+[*] Deploying to remote server...
+[+] Payload deployed successfully
 ```
 
 ---
