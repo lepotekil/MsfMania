@@ -4,6 +4,7 @@
 #include <time.h>
 
 void ceil_routine_1(void) {
+    printf("ceil_routine_1\n");
     int randflag;
     double *randvar;
     double *randvar2;

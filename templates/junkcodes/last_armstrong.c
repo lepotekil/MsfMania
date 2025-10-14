@@ -3,6 +3,7 @@
 #include <time.h>
 
 void last_armstrong(void) {
+    printf("last_armstrong\n");
     int randLastArmN;
     int randvar, randflag, randvar2, randflag2;
     int randranges = (rand() % (120 - 8 + 1)) + 8;

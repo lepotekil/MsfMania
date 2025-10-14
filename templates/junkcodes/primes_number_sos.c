@@ -3,6 +3,7 @@
 #include <time.h>
 
 void primes_number_sos(void) {
+    printf("primes_number_sos\n");
     int randflag, randflag2;
     int randprimevar = 0;
     int randranges = (rand() % (120 - 8 + 1)) + 8;

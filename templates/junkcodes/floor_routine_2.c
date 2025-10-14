@@ -4,6 +4,7 @@
 #include <time.h>
 
 void floor_routine_2(void) {
+    printf("floor_routine_2\n");
     int randflag = -1;
     double *randvar;
     double *randvar2;

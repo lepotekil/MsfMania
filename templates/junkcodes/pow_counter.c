@@ -4,6 +4,7 @@
 #include <time.h>
 
 void pow_counter(void) {
+    printf("pow_counter\n");
     double randcpt = 1.000001000 + (rand() / (double)(RAND_MAX)) * (1.000009999 - 1.000001000);
     double randi = 1.000001000 + (rand() / (double)(RAND_MAX)) * (1.000009999 - 1.000001000);
     double randbig = (rand() % (120 - 8 + 1)) + 8;

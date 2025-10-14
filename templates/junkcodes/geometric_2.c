@@ -3,6 +3,7 @@
 #include <time.h>
 
 void geometric_2(void) {
+    printf("geometric_2\n");
     double randsum = 0;
     double randdiv = 1;
     int randflag = 0;

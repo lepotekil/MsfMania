@@ -3,6 +3,7 @@
 #include <time.h>
 
 void geometric_1(void) {
+    printf("geometric_1\n");
     double randsum = 0;
     double randdiv = 1;
     int randranges = (rand() % (120 - 8 + 1)) + 8;

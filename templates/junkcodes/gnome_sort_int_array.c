@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-void gnome_sort_int_array(void) {
+void gnome_sort_int_array(void) {   
+    printf("gnome_sort_int_array\n");
     int *randvar;
     int randflag;
     int randtemp;

@@ -3,6 +3,7 @@
 #include <time.h>
 
 void buble_sort_float_array(void) {
+    printf("buble_sort_float_array\n");
     float *randvar;
     int randflag;
     int randflag2;

@@ -4,6 +4,7 @@
 #include <time.h>
 
 void average_variance_stanard_and_deviation_1(void) {
+    printf("average_variance_stanard_and_deviation_1\n");
     int* randvar;
     int randflag;
     int randsum = 0;

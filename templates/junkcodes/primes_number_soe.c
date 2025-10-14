@@ -3,6 +3,7 @@
 #include <time.h>
 
 void primes_number_soe(void) {
+    printf("primes_number_soe\n");
     unsigned long long int randflag, randflag2;
     int *randprimevar;
     int randvar = 1;

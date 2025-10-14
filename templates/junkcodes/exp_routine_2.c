@@ -4,6 +4,7 @@
 #include <time.h>
 
 void exp_routine_2(void) {
+    printf("exp_routine_2\n");
     int randflag = -1;
     double randvar;
     int randranges = (rand() % (120 - 8 + 1)) + 8;

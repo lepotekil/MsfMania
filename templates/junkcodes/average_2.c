@@ -3,6 +3,7 @@
 #include <time.h>
 
 void average_2(void) {
+    printf("average_2\n");
     int randflag;
     int randsum = 0;
     int randsum2 = 0;

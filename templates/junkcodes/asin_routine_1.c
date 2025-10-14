@@ -4,6 +4,7 @@
 #include <time.h>
 
 void asin_routine_1(void) {
+    printf("asin_routine_1\n");
     int randflag;
     double *randvar;
     int randranges = (rand() % (120 - 8 + 1)) + 8;

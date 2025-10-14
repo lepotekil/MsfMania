@@ -3,6 +3,7 @@
 #include <time.h>
 
 void double_reverse_array_1(void) {
+    printf("double_reverse_array_1\n");
     int randflag;
     int* randvar;
     int* randrevvar;

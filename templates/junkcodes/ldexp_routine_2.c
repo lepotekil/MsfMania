@@ -4,6 +4,7 @@
 #include <time.h>
 
 void ldexp_routine_2(void) {
+    printf("ldexp_routine_2\n");
     int randinteger;
     int randflag = -1;
     double randvar;

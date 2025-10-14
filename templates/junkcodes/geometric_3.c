@@ -3,6 +3,7 @@
 #include <time.h>
 
 void geometric_3(void) {
+    printf("geometric_3\n");
     double randsum = 0;
     double randdiv = 1;
     double randosum = 1.11111111111111111111 + (rand() / (double)(RAND_MAX)) * (1.9999999999999999999 - 1.11111111111111111111);

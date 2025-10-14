@@ -3,6 +3,7 @@
 #include <time.h>
 
 void sum_first_n_inter_2(void) {
+    printf("sum_first_n_integer_2\n");
     int randcounter;
     unsigned long long int randcounter2 = 0;
     int randbignumb = (rand() % (120 - 8 + 1)) + 8;

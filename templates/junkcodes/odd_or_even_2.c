@@ -3,6 +3,7 @@
 #include <time.h>
 
 void odd_or_even_2(void) {
+    printf("odd_or_even_2\n");
     int randflag;
     int *randvar;
     int randodd = 0;

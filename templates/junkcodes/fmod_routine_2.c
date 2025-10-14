@@ -4,6 +4,7 @@
 #include <time.h>
 
 void fmod_routine_2(void) {
+    printf("fmod_routine_2\n");
     int randflag = -1;
     double *randvar;
     int randranges = (rand() % (120 - 8 + 1)) + 8;

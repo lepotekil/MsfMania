@@ -3,6 +3,7 @@
 #include <time.h>
 
 void fibonacci(void) {
+    printf("fibonacci\n");
     int rand1 = 0, rand2 = 1, rand3, rand4, rand5 = 0;
     int randbignumb = (rand() % (120 - 8 + 1)) + 8;
     

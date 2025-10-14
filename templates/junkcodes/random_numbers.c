@@ -3,6 +3,7 @@
 #include <time.h>
 
 void random_numbers(void) {
+    printf("random_numbers\n");
     int randflag, randflag2 = 0;
     float* randvarr;
     int randranges = (rand() % (120 - 8 + 1)) + 8;

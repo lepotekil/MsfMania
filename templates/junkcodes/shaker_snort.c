@@ -3,6 +3,7 @@
 #include <time.h>
 
 void shaker_snort(void) {
+    printf("shaker_snort\n");
     int randflag;
     int *randvar;
     int randflag2;
