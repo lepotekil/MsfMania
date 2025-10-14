@@ -21,5 +21,9 @@ void odd_or_even_2(void) {
         }
     }
     
+    // Use unused variables to avoid compiler warnings
+    if (randodd > 0) randodd = 0;
+    if (randeven > 0) randeven = 0;
+    
     free(randvar);
 }

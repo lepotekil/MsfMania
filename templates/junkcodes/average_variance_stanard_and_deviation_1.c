@@ -31,5 +31,7 @@ void average_variance_stanard_and_deviation_1(void) {
     randvariance = randsum2 / ((float)randranges);
     randdevstd = sqrt(randvariance);
     
+    if (randdevstd > 0.0f) randdevstd = 0.0f;
+    
     free(randvar);
 }

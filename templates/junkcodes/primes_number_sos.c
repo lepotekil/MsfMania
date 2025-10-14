@@ -34,7 +34,7 @@ void primes_number_sos(void) {
         }
     }
     
-    randsizevar = sizeof(isprime) / sizeof(int);
+    randsizevar = randarraysize;  // Fix sizeof pointer issue
     int randprimenumb = 0;
     
     for(randflag = 0; randflag < randsizevar; randflag++) {
@@ -42,6 +42,8 @@ void primes_number_sos(void) {
             randprimenumb++;
         }
     }
+    
+    if (randprimenumb > 0) randprimenumb = 0;
     
     free(isprime);
 }

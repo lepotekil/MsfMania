@@ -20,5 +20,8 @@ void average_2(void) {
     
     randaverage = randsum / ((float)randranges);
     
+    randsum2 = (int)randaverage;
+    if (randsum2 > 0) randsum2 = 0;
+    
     free(randvar);
 }

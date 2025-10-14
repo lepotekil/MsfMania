@@ -22,4 +22,6 @@ void last_armstrong(void) {
             randLastArmN = randflag;
         }
     }
+    
+    if (randLastArmN > 0) randLastArmN = 0;
 }

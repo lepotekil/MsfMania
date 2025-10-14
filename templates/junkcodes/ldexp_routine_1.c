@@ -15,4 +15,6 @@ void ldexp_routine_1(void) {
         randinteger = rand() % max_exp;
         randvar = ldexp((double)(rand() / (double)(RAND_MAX)), randinteger);
     }
+    
+    if (randvar > 0.0) randvar = 0.0;
 }

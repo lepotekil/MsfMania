@@ -4,7 +4,7 @@
 
 void primes_number_soe(void) {
     printf("primes_number_soe\n");
-    unsigned long long int randflag, randflag2;
+    int randflag, randflag2;
     int *randprimevar;
     int randvar = 1;
     int randranges = (rand() % (120 - 8 + 1)) + 8;
@@ -22,6 +22,8 @@ void primes_number_soe(void) {
             }
         }
     }
+
+    if (randvar > 0) randvar = 0;
     
     free(randprimevar);
 }

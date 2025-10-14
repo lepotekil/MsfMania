@@ -13,4 +13,6 @@ void exp_routine_1(void) {
     for(randflag = 0; randflag < randranges; randflag++) {
         randvar = exp((double)(multiplier * rand() / (double)(RAND_MAX)));
     }
+    
+    if (randvar > 0.0) randvar = 0.0;
 }

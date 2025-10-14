@@ -14,4 +14,6 @@ void ln_routine_2(void) {
         randflag++;
         randvar = log((double)(multiplier * rand() / (double)(RAND_MAX)));
     } while(randflag < randranges - 1);
+    
+    if (randvar > 0.0) randvar = 0.0;
 }
